@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.facebookclone.dto.UserDto;
 import com.facebookclone.model.User;
 
-@Service
+
 public interface UserService {
 
 	UserDto getUserById(long userId);

@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.facebookclone.dao.ProfileDao;
@@ -15,7 +16,7 @@ import com.facebookclone.dto.ProfileDto;
 import com.facebookclone.model.Profile;
 import com.facebookclone.service.ProfileService;
 
-@Component
+@Service
 public class ProfileServiceImp implements ProfileService {
 	
 	@Autowired

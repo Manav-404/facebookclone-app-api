@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.facebookclone.dto.ProfileDto;
 
-@Service
+
 public interface FriendsProcessService {
 	
 	List<ProfileDto> getFriendsByUserId(long userId);

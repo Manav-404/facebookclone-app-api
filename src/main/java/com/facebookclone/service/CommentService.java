@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.facebookclone.dto.CommentDto;
 import com.facebookclone.model.Comment;
 
-@Service
 public interface CommentService {
 
 	List<CommentDto> getCommentByPostId(long postId);

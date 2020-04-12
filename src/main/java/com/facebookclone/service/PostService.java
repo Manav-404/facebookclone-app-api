@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.facebookclone.dto.PostDto;
 import com.facebookclone.model.Post;
 
-@Service
+
 public interface PostService {
 	
 	PostDto createPost(Post post);

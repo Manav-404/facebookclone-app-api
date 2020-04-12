@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.facebookclone.dao.FriendsProcessDao;
 import com.facebookclone.dao.ProfileDao;
@@ -13,7 +14,7 @@ import com.facebookclone.model.FriendsProcess;
 import com.facebookclone.model.Profile;
 import com.facebookclone.service.FriendsProcessService;
 
-@Component
+@Service
 public class FriendsProcessServiceImp implements FriendsProcessService{
 	
 	@Autowired

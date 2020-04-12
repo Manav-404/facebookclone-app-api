@@ -5,13 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.facebookclone.dao.CommentDao;
 import com.facebookclone.dto.CommentDto;
 import com.facebookclone.model.Comment;
 import com.facebookclone.service.CommentService;
 
-@Component
+@Service
 public class CommentServiceImp implements CommentService {
 	
 	@Autowired

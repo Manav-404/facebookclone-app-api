@@ -5,13 +5,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.facebookclone.dao.UserDao;
 import com.facebookclone.dto.UserDto;
 import com.facebookclone.model.User;
 import com.facebookclone.service.UserService;
 
-@Component
+@Service
 public class UserServiceImp implements UserService {
 
 	@Autowired
