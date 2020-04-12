@@ -15,7 +15,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "comment")
 public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +29,6 @@ public class Comment {
 	public Comment() {}
 	
 	public Comment(long id, String text, Post post) {
-		super();
 		this.id = id;
 		this.text = text;
 		this.post = post;

@@ -12,7 +12,6 @@ public class CommentDto {
 	
 	@Builder
 	public CommentDto(String text, long id) {
-		super();
 		this.text = text;
 		this.id = id;
 	}

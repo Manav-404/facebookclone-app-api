@@ -17,7 +17,6 @@ public class PostDto {
 	
 	@Builder
 	public PostDto(long id, String caption, long user_id , String user_name) {
-		super();
 		this.id = id;
 		this.caption = caption;
 		this.user_id = user_id;

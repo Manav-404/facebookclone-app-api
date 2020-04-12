@@ -40,11 +40,20 @@ public class UserServiceImp implements UserService {
 		return getUserDto(entity);
 	}
 	
+	@Override
+	public UserDto getUserByEmail(String email) {
+		// TODO Auto-generated method stub
+		User user = dao.getByEmail(email);
+		return getUserDto(user);
+	}
+	
 	@SuppressWarnings("unused")
 	private UserDto getUserDto(User entity) {
 		return UserDto.builder().id(entity.getId()).email(entity.getEmail())
 		.build();
 		
 	}
+
+	
 
 }

@@ -15,7 +15,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "profile")
 public class Profile {
 	
 	@Id
@@ -37,7 +36,6 @@ public class Profile {
 
 
 	public Profile(long id, String fname, String lname, String city, User user) {
-		super();
 		this.id = id;
 		this.fname = fname;
 		this.lname = lname;

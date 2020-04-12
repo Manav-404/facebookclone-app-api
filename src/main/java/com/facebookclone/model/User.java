@@ -15,10 +15,10 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Table(name = "user")
+
 @Getter
 @Setter
+@Entity
 public class User {
 	
 	@Id
@@ -36,7 +36,6 @@ public class User {
 	public User() {}
 
 	public User(long id, String email, String password, List<Post> posts, Profile profile) {
-		super();
 		this.id = id;
 		this.email = email;
 		this.password = password;

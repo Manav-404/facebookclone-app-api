@@ -1,5 +1,7 @@
 package com.facebookclone.model;
 
+import javax.persistence.Entity;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +19,6 @@ public class FriendsProcess {
 	public FriendsProcess() {}
 
 	public FriendsProcess(long user_one_id, long user_two_id, long status, long user_action) {
-		super();
 		this.user_one_id = user_one_id;
 		this.user_two_id = user_two_id;
 		this.status = status;

@@ -19,7 +19,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "post")
 public class Post {
 	
 	@Id
@@ -40,7 +39,6 @@ public class Post {
 
 
 	public Post(long id, String caption, User user, List<Comment> comments) {
-		super();
 		this.id = id;
 		this.caption = caption;
 		this.user = user;

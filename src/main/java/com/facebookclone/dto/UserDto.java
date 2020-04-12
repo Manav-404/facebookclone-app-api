@@ -12,7 +12,6 @@ public class UserDto {
 	
 	@Builder
 	public UserDto(long id, String email, String password) {
-		super();
 		this.id = id;
 		this.email = email;
 	}

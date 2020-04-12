@@ -24,7 +24,6 @@ private long id;
 
 	@Builder
 	public ProfileDto(long id, String fname, String lname, String city, long user_id, String imagePath) {
-		super();
 		this.id = id;
 		this.fname = fname;
 		this.lname = lname;
