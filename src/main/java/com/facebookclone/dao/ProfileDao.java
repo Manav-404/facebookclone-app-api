@@ -8,10 +8,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.facebookclone.model.Profile;
 
-@Repository
+
 public interface ProfileDao extends JpaRepository<Profile, Long> {
 
-	@Query(value = "SELECT * FROM profile where u_id=?1")
+	@Query(value = "SELECT * FROM profile where u_id=?1",nativeQuery = true)
 	Profile getUserProfile(long userId);
 	
 }

@@ -7,14 +7,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.facebookclone.dto.UserDto;
 import com.facebookclone.model.User;
+import com.facebookclone.service.UserService;
 import com.facebookclone.service.serviceImp.JwtUserDetailsService;
+import com.facebookclone.service.serviceImp.UserServiceImp;
 import com.facebookclone.utils.JwtUtils;
 import com.facebookclone.utils.RestResponse;
 
 @RestController
+@RequestMapping("/auth")
 public class AuthenticationController {
 	
 	@Autowired
@@ -25,6 +30,9 @@ public class AuthenticationController {
 	
 	@Autowired
 	private JwtUtils tokenUtils;
+	
+	@Autowired
+	private UserServiceImp userService;
 
 	@PostMapping("/authenticate")
 	public RestResponse authenticate(@RequestBody User user) throws Exception {
@@ -40,6 +48,13 @@ public class AuthenticationController {
 		final String jwt = tokenUtils.generateToken(userDetails); 
 		
 		return RestResponse.builder().data(jwt).status(true).build();
+		
+	}
+	
+	@PostMapping("/signup")
+	public RestResponse signup(@RequestBody User user) {
+		UserDto dto = userService.createUser(user);
+		return RestResponse.builder().data(dto).status(true).build();
 		
 	}
 

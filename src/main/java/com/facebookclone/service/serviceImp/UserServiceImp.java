@@ -4,6 +4,7 @@ package com.facebookclone.service.serviceImp;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ public class UserServiceImp implements UserService {
 
 	@Autowired
 	UserDao dao;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Override
 	public UserDto getUserById(long userId) {
@@ -36,6 +40,7 @@ public class UserServiceImp implements UserService {
 	@Override
 	public UserDto createUser(User user) {
 		// TODO Auto-generated method stub
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		User entity = dao.save(user);
 		return getUserDto(entity);
 	}

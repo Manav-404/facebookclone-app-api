@@ -1,7 +1,11 @@
 package com.facebookclone.utils;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class RestResponse {
 	
 	private Object data;

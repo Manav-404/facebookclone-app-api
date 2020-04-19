@@ -20,7 +20,7 @@ public class PostServiceImp implements PostService{
 	@Autowired
 	PostDao dao;
 	
-	@Autowired
+	
 	FriendsProcessDao friendsDao;
 	
 	

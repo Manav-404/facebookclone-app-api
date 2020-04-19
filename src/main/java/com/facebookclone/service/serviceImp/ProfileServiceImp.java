@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,13 +22,14 @@ public class ProfileServiceImp implements ProfileService {
 	
 	@Autowired
 	ProfileDao dao ;
-	@Autowired
-	Environment env;
+	
+	@Value("doc.profile")
+	String docPath;
 
 	@Override
 	public ProfileDto getProfileByUser(long userId) {
 		// TODO Auto-generated method stub
-		String path = env.getProperties().getProperty("doc.profile")+"/"+userId+"/";
+		String path = docPath+"/"+userId+"/";
 		String new_path="";
 		File files = new File(path);
 		File[] fileList = files.listFiles();
@@ -41,7 +43,7 @@ public class ProfileServiceImp implements ProfileService {
 	@Override
 	public boolean createProfile(Profile profile ,MultipartFile file) {
 		// TODO Auto-generated method stub
-		String path = env.getProperties().getProperty("doc.profile")+"/"+profile.getUser().getId()+"/"+file.getOriginalFilename();
+		String path = docPath+"/"+profile.getUser().getId()+"/"+file.getOriginalFilename();
 		File picture = new File(path);
 		try {
 			file.transferTo(picture);

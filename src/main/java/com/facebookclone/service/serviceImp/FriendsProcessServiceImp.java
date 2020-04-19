@@ -17,7 +17,7 @@ import com.facebookclone.service.FriendsProcessService;
 @Service
 public class FriendsProcessServiceImp implements FriendsProcessService{
 	
-	@Autowired
+	
 	private FriendsProcessDao dao;
 	
 	@Autowired

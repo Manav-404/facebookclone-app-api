@@ -17,7 +17,7 @@ import com.facebookclone.service.serviceImp.JwtUserDetailsService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
-	String [] antPatterns = {"**/authenticate , **/login , **/favicon.io ,**/fonts.google.com/** "};
+	
 	
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
@@ -37,9 +37,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
-		http.formLogin().disable().authorizeRequests()
-		.antMatchers(antPatterns).permitAll().anyRequest().authenticated()
-		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.cors().and()
+		.csrf().disable().authorizeRequests()
+		.antMatchers("/auth/**").permitAll().anyRequest().authenticated()
+		.and().formLogin().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		http.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
 		
@@ -48,12 +49,12 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// TODO Auto-generated method stub
-		auth.userDetailsService(userDetailsService);
+		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
 	
 	
 	@Bean
-	public BCryptPasswordEncoder getBCryptPasswordEncoder() {
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 

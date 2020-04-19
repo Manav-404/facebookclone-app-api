@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import com.facebookclone.model.User;
 
-@Repository
+
 public interface UserDao extends JpaRepository<User, Long>  {
 	
-	@Query(value = "SELECT * FROM user where email=?1")
+	@Query(value = "SELECT * FROM user where email=?1" ,nativeQuery = true)
 	User getByEmail(String email);
 
 }
