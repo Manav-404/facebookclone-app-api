@@ -9,11 +9,13 @@ import lombok.Setter;
 public class UserDto {
 	private long id;
 	private String email;
+	private String signInToken;
 	
 	@Builder
-	public UserDto(long id, String email, String password) {
+	public UserDto(long id, String email, String password ,String signInToken) {
 		this.id = id;
 		this.email = email;
+		this.signInToken=signInToken;
 	}
 	
 	

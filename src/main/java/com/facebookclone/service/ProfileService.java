@@ -10,6 +10,7 @@ import com.facebookclone.model.Profile;
 public interface ProfileService {
 	
 	ProfileDto getProfileByUser(long userId);
-	boolean createProfile (Profile profile ,MultipartFile file);
-	ProfileDto editProfile(Profile profile);
+	ProfileDto createProfile (Profile profile , String token);
+	String uploadProfilePhoto(MultipartFile file , long id);
+	ProfileDto editProfile(Profile profile ,long id);
 }

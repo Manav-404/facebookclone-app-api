@@ -54,6 +54,9 @@ public class AuthenticationController {
 	@PostMapping("/signup")
 	public RestResponse signup(@RequestBody User user) {
 		UserDto dto = userService.createUser(user);
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(dto.getEmail());
+		final String jwt = tokenUtils.generateToken(userDetails); 
+		dto.setSignInToken(jwt);
 		return RestResponse.builder().data(dto).status(true).build();
 		
 	}
