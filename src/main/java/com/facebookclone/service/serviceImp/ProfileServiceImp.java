@@ -42,12 +42,10 @@ public class ProfileServiceImp implements ProfileService {
 		String path = env.getProperty("doc.profile")+userId;
 		String new_path="";
 		File files = new File(path);
-		System.out.println(files.getAbsolutePath());
 			File[] fileList = files.listFiles();
 			for(File file : fileList) {
 				 if(file.exists()) {
 					 new_path = path+"\\"+file.getName();
-					 System.out.println(new_path);
 				 }
 			}
 		
@@ -71,8 +69,15 @@ public class ProfileServiceImp implements ProfileService {
 	}
 	
 	@Override
-	public String uploadProfilePhoto(MultipartFile file , long id) {
+	public String uploadProfilePhoto(MultipartFile file , long id , String token) throws Exception {
 		// TODO Auto-generated method stub
+		String email = tokenUtils.extractUsername(token.substring(7));
+		User user = userDao.getOne(id);
+		if(!user.getEmail().equalsIgnoreCase(email)) {
+			throw new Exception("You are not authrozed to change the profile picture");
+		}
+		
+		
 		String path = env.getProperty("doc.profile") +id+"\\";
 		File dir = new File(path);
 		dir.mkdirs();
@@ -118,6 +123,25 @@ public class ProfileServiceImp implements ProfileService {
 	private ProfileDto getProfileDto(Profile profile , String path) {
 		return ProfileDto.builder().fname(profile.getFname()).lname(profile.getLname())
 				.city(profile.getCity()).id(profile.getId()).user_id(profile.getUser().getId()).imagePath(path).build();
+	}
+
+	@Override
+	public ProfileDto getBySearch(String name) {
+		// TODO Auto-generated method stub
+		Profile searchProfile = dao.searchByName(name);
+		String path = env.getProperty("doc.profile")+searchProfile.getUser().getId();
+		String new_path="";
+		File files = new File(path);
+			File[] fileList = files.listFiles();
+			for(File file : fileList) {
+				 if(file.exists()) {
+					 new_path = path+"\\"+file.getName();
+				 }
+			}
+			
+			return getProfileDto(searchProfile, new_path);
+		
+		
 	}
 
 	

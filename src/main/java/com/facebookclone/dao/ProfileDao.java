@@ -14,4 +14,7 @@ public interface ProfileDao extends JpaRepository<Profile, Long> {
 	@Query(value = "SELECT * FROM profile where u_id=?1",nativeQuery = true)
 	Profile getUserProfile(long userId);
 	
+	@Query(value = "SELECT * FROM profile WHERE MATCH(fname) AGAINST( ? IN NATURAL LANGUAGE MODE)" , nativeQuery = true)
+	Profile searchByName(String name);
+	
 }

@@ -1,5 +1,6 @@
 package com.facebookclone.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -35,6 +37,9 @@ public class Post {
 	private List<Comment> comments;
 	
 	
+	private Date createdDate;
+	
+	
 	public Post() {}
 
 
@@ -44,6 +49,11 @@ public class Post {
 		this.user = user;
 		this.comments = comments;
 	};
+	
+	@PrePersist
+	public void date() {
+		createdDate = new Date();
+	}
 	
 	
 	

@@ -11,16 +11,18 @@ public class PostDto {
 	private String caption;
 	private long user_id;
 	private String user_name;
+	private String path;
 	
 	
 	
 	
 	@Builder
-	public PostDto(long id, String caption, long user_id , String user_name) {
+	public PostDto(long id, String caption, long user_id , String user_name , String path) {
 		this.id = id;
 		this.caption = caption;
 		this.user_id = user_id;
 		this.user_name=user_name;
+		this.path = path;
 	}
 	
 	

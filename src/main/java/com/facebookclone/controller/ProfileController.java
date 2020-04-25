@@ -1,7 +1,5 @@
 package com.facebookclone.controller;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,16 +43,22 @@ public class ProfileController {
 	public RestResponse createProfile(@RequestBody Profile profile , @RequestHeader(value = "Authorization") String token) {
 		
 		ProfileDto create = service.createProfile(profile ,token);
-		
 			return RestResponse.builder().data(create).status(false).build();		
 
 	}
 	
 	@PostMapping("/uploadPhoto/{id}")
-	public RestResponse uploadPhoto(@PathVariable("id") long id, @RequestParam("file")MultipartFile file) {
-		String path = service.uploadProfilePhoto(file, id);
-		
+	public RestResponse uploadPhoto(@PathVariable("id") long id, @RequestParam("file")MultipartFile file ,@RequestHeader(value = "Authorization") String token) throws Exception {
+		String path = service.uploadProfilePhoto(file, id , token);
 		return RestResponse.builder().data(path).status(true).build();
 	}
+	
+	@GetMapping("/search/{key}")
+	public RestResponse searchFriends(@PathVariable("key")String name) {
+		ProfileDto dto = service.getBySearch(name);
+		return RestResponse.builder().data(dto).status(true).build();
+	}
 
+	
+	
 }

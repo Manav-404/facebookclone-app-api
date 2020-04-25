@@ -12,7 +12,7 @@ import com.facebookclone.model.Post;
 
 public interface PostDao extends JpaRepository<Post, Long> {
 	
-	@Query(value = "SELECT * FROM post where u_id = ?1" ,nativeQuery = true)
+	@Query(value = "SELECT * FROM post where u_id = ?1 ORDER BY created_date DESC" ,nativeQuery = true)
 	List<Post> getPostByUser(long userId);
 
 }
