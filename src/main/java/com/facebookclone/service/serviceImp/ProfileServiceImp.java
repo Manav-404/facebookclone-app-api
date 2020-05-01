@@ -54,8 +54,16 @@ public class ProfileServiceImp implements ProfileService {
 	}
 
 	@Override
-	public ProfileDto createProfile(Profile profile ,String token) {
+	public ProfileDto createProfile(Profile profile ,String token) throws Exception {
 		
+		try {
+			if(profile==null) {
+				throw new Exception("Please try again.");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String email = tokenUtils.extractUsername(token.substring(7));
 		User user = userDao.getByEmail(email);
 		profile.setUser(user);
@@ -74,7 +82,7 @@ public class ProfileServiceImp implements ProfileService {
 		String email = tokenUtils.extractUsername(token.substring(7));
 		User user = userDao.getOne(id);
 		if(!user.getEmail().equalsIgnoreCase(email)) {
-			throw new Exception("You are not authrozed to change the profile picture");
+			throw new Exception("You are not authorized to change the profile picture");
 		}
 		
 		
@@ -88,8 +96,9 @@ public class ProfileServiceImp implements ProfileService {
 				f.delete();
 			}
 		}
+		String updatedFileName = file.getOriginalFilename().replace("fakepath", "Users\\Hooman");
 		
-		File uploadedFile = new File(dir, file.getOriginalFilename());
+		File uploadedFile = new File(dir, updatedFileName);
 		
 		try {
 			if(!uploadedFile.exists()) {
@@ -103,7 +112,7 @@ public class ProfileServiceImp implements ProfileService {
 		
 		
 		
-		return uploadedFile.getPath();
+		return" http://127.0.0.1:9090/"+ uploadedFile.getPath().substring(16);
 
 		
 	}

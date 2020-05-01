@@ -5,6 +5,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,9 @@ import com.facebookclone.service.serviceImp.UserServiceImp;
 import com.facebookclone.utils.JwtUtils;
 import com.facebookclone.utils.RestResponse;
 
+
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthenticationController {
 	
 	@Autowired
@@ -41,7 +43,7 @@ public class AuthenticationController {
 					new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
 					);
 		}catch(BadCredentialsException e) {
-			throw new Exception("Incorrect Uusername or password");
+			throw new Exception("Incorrect username or password");
 		}
 		
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());

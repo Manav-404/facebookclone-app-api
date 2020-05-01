@@ -40,7 +40,7 @@ public class ProfileController {
 	}
 	
 	@PostMapping("/profile")
-	public RestResponse createProfile(@RequestBody Profile profile , @RequestHeader(value = "Authorization") String token) {
+	public RestResponse createProfile(@RequestBody Profile profile , @RequestHeader(value = "Authorization") String token) throws Exception {
 		
 		ProfileDto create = service.createProfile(profile ,token);
 			return RestResponse.builder().data(create).status(false).build();		

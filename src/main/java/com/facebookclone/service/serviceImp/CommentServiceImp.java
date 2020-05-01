@@ -38,7 +38,7 @@ public class CommentServiceImp implements CommentService {
 	
 	
 	private CommentDto getCommentDto(Comment comment) {
-		return CommentDto.builder().id(comment.getId()).text(comment.getText())
+		return CommentDto.builder().id(comment.getId()).text(comment.getText()).profile(comment.getProfile())
 				.build();
 	}
 

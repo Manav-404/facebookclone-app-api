@@ -13,7 +13,7 @@ public interface FriendsProcessService {
 	ProfileDto sendFriendRequest(long friendId, long currentUserId);
 	boolean acceptFriendRequest(long friendId , long currentUserId);
 	boolean rejectFriendRequest(long friendId , long currentUserId);
-	List<ProfileDto> toAccept(long currentUserId);
+	List<ProfileDto> toAccept(long currentUserId) throws Exception;
 	
 
 }

@@ -11,6 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import com.facebookclone.service.serviceImp.JwtUserDetailsService;
 
@@ -39,8 +43,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		// TODO Auto-generated method stub
 		http.cors().and()
 		.csrf().disable().authorizeRequests()
-		.antMatchers("/auth/**").permitAll().anyRequest().authenticated()
-		.and().formLogin().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		.antMatchers("/api/auth/**" , "https://fonts.googleapis.com/**" , "favicon.ico/**").permitAll()
+		.anyRequest().authenticated()
+		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		http.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
 		
@@ -57,5 +62,21 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+	
+	
+	@Bean
+	public CorsFilter corsFilter() {
+	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	CorsConfiguration config = new CorsConfiguration();
+	config.setAllowCredentials(true);
+	config.addAllowedOrigin("*");
+	config.addAllowedHeader("*");
+	config.addAllowedMethod("GET");
+	config.addAllowedMethod("POST");
+	config.addAllowedMethod("PUT");
+	config.addAllowedMethod("DELETE");
+	config.addAllowedMethod("OPTIONS");
+	source.registerCorsConfiguration("/**", config);
+	return new CorsFilter(source);
+	}
 }

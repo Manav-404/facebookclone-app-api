@@ -1,5 +1,7 @@
 package com.facebookclone.dto;
 
+import com.facebookclone.model.Profile;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,11 +11,13 @@ import lombok.Setter;
 public class CommentDto {
 	private String text;
 	private long id;
+	private Profile profile;
 	
 	@Builder
-	public CommentDto(String text, long id) {
+	public CommentDto(String text, long id , Profile profile) {
 		this.text = text;
 		this.id = id;
+		this.profile = profile;
 	}
 	
 	

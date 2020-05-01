@@ -32,7 +32,6 @@ public class PostController {
 	}
 	
 	
-	@Scheduled(fixedDelay = 25000)
 	@GetMapping("/friends/{userId}")
 	public RestResponse getFriendspost(@PathVariable("userId")Long userId) {
 		List<PostDto> dto = postService.getPostOfFriends(userId);

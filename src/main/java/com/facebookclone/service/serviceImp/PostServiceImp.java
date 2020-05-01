@@ -21,10 +21,13 @@ import com.facebookclone.service.PostService;
 @Service
 public class PostServiceImp implements PostService{
 	
+	
+	private FriendsProcessDao friendsDao;
+	
+	
 	@Autowired
-	PostDao dao;
+	private PostDao dao;
 
-	FriendsProcessDao friendsDao;
 	
 	@Autowired
 	private Environment env;

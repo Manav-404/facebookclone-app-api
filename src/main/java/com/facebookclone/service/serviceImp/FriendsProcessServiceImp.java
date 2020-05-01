@@ -72,15 +72,21 @@ public class FriendsProcessServiceImp implements FriendsProcessService{
 	@Override
 	public boolean rejectFriendRequest(long friendId, long currentUserId) {
 		// TODO Auto-generated method stub
-		dao.deleteFriendRequest(friendId, currentUserId);
-		return true;
+		boolean delete = dao.deleteFriendRequest(friendId, currentUserId);
+		if(delete) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
-	public List<ProfileDto> toAccept(long currentUserId) {
+	public List<ProfileDto> toAccept(long currentUserId) throws Exception {
 		// TODO Auto-generated method stub
 		List<ProfileDto> profileList= new ArrayList<>();
 		List<FriendsProcess> friendsList = dao.getToBeAcceptedList(currentUserId);
+		if(friendsList==null) {
+			throw new Exception("You do not have any friend request to be accepted");
+		}
 		for(FriendsProcess friend:friendsList) {
 			if(friend.getUser_one_id()==currentUserId) {
 				Profile profile = profileDao.getUserProfile(friend.getUser_one_id());
