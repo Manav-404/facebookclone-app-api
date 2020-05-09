@@ -1,5 +1,7 @@
 package com.facebookclone.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,6 +17,6 @@ public interface ProfileDao extends JpaRepository<Profile, Long> {
 	Profile getUserProfile(long userId);
 	
 	@Query(value = "SELECT * FROM profile WHERE MATCH(fname) AGAINST( ? IN NATURAL LANGUAGE MODE)" , nativeQuery = true)
-	Profile searchByName(String name);
+	List<Profile> searchByName(String name);
 	
 }

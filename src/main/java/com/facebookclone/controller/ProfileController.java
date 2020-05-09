@@ -1,5 +1,7 @@
 package com.facebookclone.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,7 +57,7 @@ public class ProfileController {
 	
 	@GetMapping("/search/{key}")
 	public RestResponse searchFriends(@PathVariable("key")String name) {
-		ProfileDto dto = service.getBySearch(name);
+		List<ProfileDto> dto = service.getBySearch(name);
 		return RestResponse.builder().data(dto).status(true).build();
 	}
 

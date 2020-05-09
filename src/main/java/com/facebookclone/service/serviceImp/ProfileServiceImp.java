@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,20 +144,27 @@ public class ProfileServiceImp implements ProfileService {
 	}
 
 	@Override
-	public ProfileDto getBySearch(String name) {
+	public List<ProfileDto> getBySearch(String name) {
 		// TODO Auto-generated method stub
-		Profile searchProfile = dao.searchByName(name);
-		String path = env.getProperty("doc.profile")+searchProfile.getUser().getId();
-		String new_path="";
-		File files = new File(path);
-			File[] fileList = files.listFiles();
-			for(File file : fileList) {
-				 if(file.exists()) {
-					 new_path = path+"\\"+file.getName();
-				 }
-			}
+		List<ProfileDto> dtoList = new ArrayList<ProfileDto>();
+		List<Profile> prof = dao.searchByName(name);
+		
+		for(Profile searchProfile : prof) {
+			String path = env.getProperty("doc.profile")+searchProfile.getUser().getId();
+			String new_path="";
+			File files = new File(path);
+				File[] fileList = files.listFiles();
+				for(File file : fileList) {
+					 if(file.exists()) {
+						 new_path = path+"\\"+file.getName();
+					 }
+				}
+				String returnPath = httpServer+new_path.substring(16);
+				dtoList.add(getProfileDto(searchProfile, returnPath));
+		}
+		
 			
-			return getProfileDto(searchProfile, new_path);
+			return dtoList ;
 		
 		
 	}
