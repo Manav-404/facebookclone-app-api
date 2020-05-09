@@ -24,6 +24,8 @@ import com.facebookclone.utils.JwtUtils;
 @Service
 public class ProfileServiceImp implements ProfileService {
 	
+	String httpServer = "http://127.0.0.1:9090/";
+	
 	@Autowired
 	private ProfileDao dao ;
 	
@@ -37,7 +39,7 @@ public class ProfileServiceImp implements ProfileService {
 	private org.springframework.core.env.Environment env;
 
 	@Override
-	public ProfileDto getProfileByUser(long userId) {
+	public ProfileDto getProfileByUser(long userId) throws Exception {
 		// TODO Auto-generated method stub
 		String path = env.getProperty("doc.profile")+userId;
 		String new_path="";
@@ -48,9 +50,14 @@ public class ProfileServiceImp implements ProfileService {
 					 new_path = path+"\\"+file.getName();
 				 }
 			}
+			
+			String returnPath = httpServer+new_path.substring(16);
 		
 		Profile profile = dao.getUserProfile(userId);
-		return getProfileDto(profile , new_path);
+		if(profile==null) {
+			throw new Exception("Profile setup needed");
+		}
+		return getProfileDto(profile , returnPath);
 	}
 
 	@Override
@@ -112,7 +119,7 @@ public class ProfileServiceImp implements ProfileService {
 		
 		
 		
-		return" http://127.0.0.1:9090/"+ uploadedFile.getPath().substring(16);
+		return httpServer+ uploadedFile.getPath().substring(16);
 
 		
 	}

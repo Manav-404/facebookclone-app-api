@@ -18,16 +18,19 @@ public class CommentServiceImp implements CommentService {
 	@Autowired
 	private CommentDao dao;
 
-	@Override
-	public List<CommentDto> getCommentByPostId(long postId) {
-		// TODO Auto-generated method stub
-		List<CommentDto> commentList = new ArrayList<>();
-		List<Comment> list = dao.getByPost(postId);
-		for(Comment comment : list) {
-			commentList.add(getCommentDto(comment));
-		}
-		return commentList;
-	}
+//	@Override
+//	public List<CommentDto> getCommentByPostId(List<Long> postId) {
+//		// TODO Auto-generated method stub
+//		List<CommentDto> commentList = new ArrayList<>();
+//		for(int i =0 ; i<postId.size() ; i++) {
+//			List<Comment> list = dao.getByPost(postId.get(i));
+//			for(Comment comment : list) {
+//				commentList.add(getCommentDto(comment));
+//			}
+//		}
+//		
+//		return commentList;
+//	}
 
 	@Override
 	public CommentDto postComment(Comment comment) {

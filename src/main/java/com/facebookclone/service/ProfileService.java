@@ -9,7 +9,7 @@ import com.facebookclone.model.Profile;
 
 public interface ProfileService {
 	
-	ProfileDto getProfileByUser(long userId);
+	ProfileDto getProfileByUser(long userId) throws Exception;
 	ProfileDto createProfile (Profile profile , String token) throws Exception;
 	String uploadProfilePhoto(MultipartFile file , long id , String token)  throws Exception;
 	ProfileDto editProfile(Profile profile ,long id);

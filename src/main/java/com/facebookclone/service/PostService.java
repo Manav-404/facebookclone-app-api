@@ -11,7 +11,8 @@ import com.facebookclone.model.Post;
 
 public interface PostService {
 	
-	PostDto createPost(Post post , MultipartFile file);
+	PostDto createPost(String text, String token);
+	String postPic(MultipartFile file , long postId );
 	List<PostDto>  getPostOfFriends(long userId);
 	List<PostDto> getWallPosts(long userId);
 	

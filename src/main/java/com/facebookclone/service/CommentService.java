@@ -8,7 +8,5 @@ import com.facebookclone.dto.CommentDto;
 import com.facebookclone.model.Comment;
 
 public interface CommentService {
-
-	List<CommentDto> getCommentByPostId(long postId);
 	CommentDto postComment(Comment comment);
 }

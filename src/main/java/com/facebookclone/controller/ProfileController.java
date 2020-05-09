@@ -25,7 +25,7 @@ public class ProfileController {
 	private ProfileService service ;
 	
 	@GetMapping("/profile/{id}")
-	public RestResponse getProfile(@PathVariable("id") long id) {
+	public RestResponse getProfile(@PathVariable("id") long id) throws Exception {
 		ProfileDto dto  = service.getProfileByUser(id);
 		return RestResponse.builder().data(dto)
 				.status(true).build();

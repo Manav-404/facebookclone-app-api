@@ -13,6 +13,6 @@ import com.facebookclone.model.Comment;
 
 public interface CommentDao extends JpaRepository<Comment,Long> {
 
-	@Query(value = "SELECT * FROM comment where p_id=?1" , nativeQuery = true)
+	@Query(value = "SELECT * FROM comment where p_id=?1 ORDER BY created_date DESC" , nativeQuery = true)
 	List<Comment> getByPost(long postId);
 }

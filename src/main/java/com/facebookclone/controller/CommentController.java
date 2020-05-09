@@ -24,12 +24,12 @@ public class CommentController {
 	
 	
 
-	@GetMapping("/get/postId")
-	public RestResponse getComment(@PathVariable("postId") Long postId) {
-	List<CommentDto> dto = service.getCommentByPostId(postId);
-	return RestResponse.builder().data(dto).status(true).build();
-		
-	}
+//	@GetMapping("/get/postId")
+//	public RestResponse getComment(@PathVariable("postId") List<Long> postId) {
+//	List<CommentDto> dto = service.getCommentByPostId(postId);
+//	return RestResponse.builder().data(dto).status(true).build();
+//		
+//	}
 	
 	@PostMapping("/postcomment")
 	public RestResponse postComment(@RequestBody Comment comment) {

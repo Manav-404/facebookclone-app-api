@@ -48,8 +48,10 @@ public class AuthenticationController {
 		
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
 		final String jwt = tokenUtils.generateToken(userDetails); 
+		UserDto u = userService.getUserByEmail(userDetails.getUsername());
+		u.setSignInToken(jwt);
 		
-		return RestResponse.builder().data(jwt).status(true).build();
+		return RestResponse.builder().data(u).status(true).build();
 		
 	}
 	

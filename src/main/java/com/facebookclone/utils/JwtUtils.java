@@ -30,6 +30,7 @@ public class JwtUtils {
 
 	}
 	
+	
 	public Date extractExpiration(String token) {
 		return extractClaims(token, Claims::getExpiration);
 	}
@@ -64,7 +65,7 @@ public class JwtUtils {
 				.compact();
 	}
 	
-	public boolean validateToke(String token , UserDetails user) {
+	public boolean validateToken(String token , UserDetails user) {
 		final String username= extractUsername(token);
 		return (username.equals(user.getUsername()) && !isTokenExpired(token));
 	}
