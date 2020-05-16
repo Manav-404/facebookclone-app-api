@@ -15,9 +15,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.facebookclone.dao.FriendsProcessDao;
 import com.facebookclone.dao.ProfileDao;
 import com.facebookclone.dao.UserDao;
 import com.facebookclone.dto.ProfileDto;
+import com.facebookclone.model.FriendsProcess;
 import com.facebookclone.model.Profile;
 import com.facebookclone.model.User;
 import com.facebookclone.service.ProfileService;
@@ -39,6 +41,9 @@ public class ProfileServiceImp implements ProfileService {
 	
 	@Autowired
 	private org.springframework.core.env.Environment env;
+	
+	@Autowired
+	private FriendsProcessDao friendsDao;
 
 	@Override
 	public ProfileDto getProfileByUser(long userId) throws Exception {
@@ -144,10 +149,14 @@ public class ProfileServiceImp implements ProfileService {
 	}
 
 	@Override
-	public List<ProfileDto> getBySearch(String name) {
+	public List<ProfileDto> getBySearch(String name , String token) {
 		// TODO Auto-generated method stub
+		String email = tokenUtils.extractUsername(token.substring(7));
+		User user = userDao.getByEmail(email);
+		long currentUserId = user.getId();
 		List<ProfileDto> dtoList = new ArrayList<ProfileDto>();
 		List<Profile> prof = dao.searchByName(name);
+		List<FriendsProcess> pending = friendsDao.getPendingRequest(currentUserId);
 		
 		for(Profile searchProfile : prof) {
 			String path = env.getProperty("doc.profile")+searchProfile.getUser().getId();
@@ -161,6 +170,25 @@ public class ProfileServiceImp implements ProfileService {
 				}
 				String returnPath = httpServer+new_path.substring(16);
 				dtoList.add(getProfileDto(searchProfile, returnPath));
+				
+				
+		}
+		
+//		for(int i =0 ; i<dtoList.size();i++) {
+//			for(int j =0 ; j<pending.size();j++) {
+//				if(dtoList.get(i).getUser_id()==pending.get(j).getUser_one_id()||dtoList.get(i).getUser_id()==pending.get(j).getUser_two_id()) {
+//					dtoList.remove(i);
+//				}
+//			}
+//		}
+
+		for(int i = 0 ; i<pending.size();i++) {
+			for(int j =0 ; j<dtoList.size() ; j++) {
+				if(pending.get(i).getUser_one_id()==dtoList.get(j).getUser_id()||pending.get(i).getUser_two_id()==dtoList.get(j).getUser_id()) {
+					dtoList.remove(j);
+					break;
+				}
+			}
 		}
 		
 			

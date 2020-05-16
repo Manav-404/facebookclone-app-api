@@ -56,8 +56,8 @@ public class ProfileController {
 	}
 	
 	@GetMapping("/search/{key}")
-	public RestResponse searchFriends(@PathVariable("key")String name) {
-		List<ProfileDto> dto = service.getBySearch(name);
+	public RestResponse searchFriends(@PathVariable("key")String name ,@RequestHeader(value = "Authorization") String token) {
+		List<ProfileDto> dto = service.getBySearch(name , token);
 		return RestResponse.builder().data(dto).status(true).build();
 	}
 

@@ -15,5 +15,5 @@ public interface ProfileService {
 	ProfileDto createProfile (Profile profile , String token) throws Exception;
 	String uploadProfilePhoto(MultipartFile file , long id , String token)  throws Exception;
 	ProfileDto editProfile(Profile profile ,long id);
-	List<ProfileDto> getBySearch(String name);
+	List<ProfileDto> getBySearch(String name , String token);
 }

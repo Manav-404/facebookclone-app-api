@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,16 +22,16 @@ public class FriendsProcessController {
 	@Autowired
 	FriendsProcessService service;
 	
-	@PostMapping("/send/{friendId}/{userId}")
-	public RestResponse sendFriendRequest(@PathVariable("friendId")Long friendId, @PathVariable("userId")Long userId) {
-		ProfileDto dto  = service.sendFriendRequest(friendId, userId);
+	@GetMapping("/send/{friendId}")
+	public RestResponse sendFriendRequest(@PathVariable("friendId")Long friendId, @RequestHeader("Authorization")String token) {
+		ProfileDto dto  = service.sendFriendRequest(friendId, token);
 		return RestResponse.builder().data(dto).status(true).build();
 		
 	}
 	
-	@PutMapping("/accept/{friendId}/{userId}")
-	public RestResponse acceptFriendRequest(@PathVariable("friendId")Long friendId, @PathVariable("userId")Long userId) {
-		boolean accepted = service.acceptFriendRequest(friendId, userId);
+	@GetMapping("/accept/{friendId}")
+	public RestResponse acceptFriendRequest(@PathVariable("friendId")Long friendId, @RequestHeader("Authorization")String token) throws Exception {
+		boolean accepted = service.acceptFriendRequest(friendId, token);
 		if(accepted) {
 			return RestResponse.builder().data(accepted).status(true).build();
 		}else {
@@ -38,15 +39,15 @@ public class FriendsProcessController {
 		}
 	}
 	
-	@GetMapping("/list/{userId}")
-	public RestResponse getFriends(@PathVariable("userId")Long userId) {
-		List<ProfileDto> dto = service.getFriendsByUserId(userId);
+	@GetMapping("/list")
+	public RestResponse getFriends(@RequestHeader("Authorization")String token) {
+		List<ProfileDto> dto = service.getFriendsByUserId(token);
 		return RestResponse.builder().data(dto).status(true).build();
 	}
 	
-	@PostMapping("/reject/{friendId}/{userId}")
-	public RestResponse rejectFriendRequest(@PathVariable("friendId")Long friendId, @PathVariable("userId")Long userId) {
-		boolean rejected = service.rejectFriendRequest(friendId, userId);
+	@GetMapping("/reject/{friendId}")
+	public RestResponse rejectFriendRequest(@PathVariable("friendId")Long friendId, @RequestHeader("Authorization")String token) {
+		boolean rejected = service.rejectFriendRequest(friendId, token);
 		if(rejected) {
 			return RestResponse.builder().data(rejected).status(true).build();
 		}else {
@@ -54,9 +55,9 @@ public class FriendsProcessController {
 		}
 	}
 	
-	@GetMapping("/pending/{userId}")
-	public RestResponse pendingRequests(@PathVariable("userId")Long userId) throws Exception {
-		List<ProfileDto> dto =  service.toAccept(userId);
+	@GetMapping("/pending")
+	public RestResponse pendingRequests(@RequestHeader("Authorization")String token) throws Exception {
+		List<ProfileDto> dto =  service.toAccept(token);
 		return RestResponse.builder().data(dto).status(true).build();
 	}
 	

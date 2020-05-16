@@ -29,6 +29,8 @@ public class PostServiceImp implements PostService{
 	
 	String httpServer = "http://127.0.0.1:9090/";
 	
+
+	@Autowired
 	private FriendsProcessDao friendsDao;
 	
 	
