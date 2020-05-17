@@ -16,19 +16,21 @@ public class PostDto {
 	private long user_id;
 	private String user_name;
 	private String path;
-	private List<Comment> comments;
+	private String profile;
+	private List<CommentDto> comments;
 	
 	
 	
 	
 	@Builder
-	public PostDto(long id, String caption, long user_id , String user_name , String path , List<Comment> comments) {
+	public PostDto(long id, String caption, long user_id , String user_name , String path , List<CommentDto> comments , String profile) {
 		this.id = id;
 		this.caption = caption;
 		this.user_id = user_id;
 		this.user_name=user_name;
 		this.path = path;
 		this.comments = comments;
+		this.profile = profile;
 	}
 	
 	

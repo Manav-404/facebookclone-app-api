@@ -17,9 +17,11 @@ import com.facebookclone.dao.PostDao;
 import com.facebookclone.dao.UserDao;
 import com.facebookclone.dto.CommentDto;
 import com.facebookclone.dto.PostDto;
+import com.facebookclone.dto.ProfileDto;
 import com.facebookclone.model.Comment;
 import com.facebookclone.model.FriendsProcess;
 import com.facebookclone.model.Post;
+import com.facebookclone.model.Profile;
 import com.facebookclone.model.User;
 import com.facebookclone.service.PostService;
 import com.facebookclone.utils.JwtUtils;
@@ -61,7 +63,7 @@ public class PostServiceImp implements PostService{
 		Post entity = dao.save(post);
 		return PostDto.builder().id(entity.getId()).user_id(entity.getUser().getId())
 				.caption(entity.getCaption())
-				.user_name(entity.getUser().getProfile().getFname()+""+entity.getUser().getProfile().getLname()).comments(entity.getComments()).build();
+				.user_name(entity.getUser().getProfile().getFname()+""+entity.getUser().getProfile().getLname()).build();
 	}
 
 
@@ -77,7 +79,8 @@ public class PostServiceImp implements PostService{
 					List<Comment> comments = commentDao.getByPost(post.getId());
 					post.setComments(comments);
 					String path = getPostPicture(post);
-					postList.add(getPostDto(post , path));
+					String profile = getPostProfilePicture(post);
+					postList.add(getPostDto(post , path , profile));
 				}
 			}else if(friend.getUser_two_id()==userId) {
 				List<Post> posts = dao.getPostByUser(friend.getUser_one_id());
@@ -85,7 +88,8 @@ public class PostServiceImp implements PostService{
 					List<Comment> comments = commentDao.getByPost(post.getId());
 					post.setComments(comments);
 					String path = getPostPicture(post);
-					postList.add(getPostDto(post , path));
+					String profile = getPostProfilePicture(post);
+					postList.add(getPostDto(post , path , profile));
 				}
 			}
 		}
@@ -106,6 +110,24 @@ public class PostServiceImp implements PostService{
 			
 			return replacedPath;
 	}
+	
+	private String getPostProfilePicture(Post post) {
+		System.out.println(post.getUser().getId());
+		String path = env.getProperty("doc.profile")+post.getUser().getId();
+		String new_path="";
+		File files = new File(path);
+			File[] fileList = files.listFiles();
+			for(File file : fileList) {
+				 if(file.exists()) {
+					 new_path = path+"\\"+file.getName();
+				 }
+			}
+			String returnPath = httpServer+new_path.substring(16);
+			
+			return returnPath;
+	}
+	
+	
 
 	@Override
 	public List<PostDto> getWallPosts(long userId) {
@@ -116,7 +138,8 @@ public class PostServiceImp implements PostService{
 			List<Comment> comments = commentDao.getByPost(post.getId());
 			post.setComments(comments);
 			String path = getPostPicture(post);
-			postList.add(getPostDto(post , path));
+			String profile = getPostProfilePicture(post);
+			postList.add(getPostDto(post , path , profile));
 		}
 		
 		return postList;
@@ -144,13 +167,27 @@ public class PostServiceImp implements PostService{
 		return new_path;
 	}
 	
+	private ProfileDto getProfileDto(Profile profile) {
+		return ProfileDto.builder().fname(profile.getFname()).lname(profile.getLname())
+				.city(profile.getCity()).id(profile.getId()).user_id(profile.getUser().getId()).build();
+	}
 	
+	private CommentDto getCommentDto(Comment comment) {
+		return CommentDto.builder().id(comment.getId()).text(comment.getText()).profile(getProfileDto(comment.getProfile()))
+				.build();
+	}
 	
-	private PostDto getPostDto(Post entity , String path) {
+	private PostDto getPostDto(Post entity , String path , String profile) {
 		// TODO Auto-generated method stub
+		List<CommentDto> comDto = new ArrayList<>();
+		List<Comment> comments = entity.getComments();
+		for(Comment com : comments) {
+			CommentDto dto = getCommentDto(com);
+			comDto.add(dto);
+		}
 		return PostDto.builder().id(entity.getId()).user_id(entity.getUser().getId())
-				.caption(entity.getCaption())
-				.user_name(entity.getUser().getProfile().getFname()+""+entity.getUser().getProfile().getLname()).comments(entity.getComments()).path(path).build();
+				.caption(entity.getCaption()).profile(profile)
+				.user_name(entity.getUser().getProfile().getFname()+""+entity.getUser().getProfile().getLname()).comments(comDto).path(path).build();
 	}
 
 

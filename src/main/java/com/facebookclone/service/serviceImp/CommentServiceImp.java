@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.facebookclone.dao.CommentDao;
 import com.facebookclone.dto.CommentDto;
+import com.facebookclone.dto.ProfileDto;
 import com.facebookclone.model.Comment;
+import com.facebookclone.model.Profile;
 import com.facebookclone.service.CommentService;
 
 @Service
@@ -39,9 +41,13 @@ public class CommentServiceImp implements CommentService {
 		return getCommentDto(com);
 	}
 	
+	private ProfileDto getProfileDto(Profile profile) {
+		return ProfileDto.builder().fname(profile.getFname()).lname(profile.getLname())
+				.city(profile.getCity()).id(profile.getId()).user_id(profile.getUser().getId()).build();
+	}
 	
 	private CommentDto getCommentDto(Comment comment) {
-		return CommentDto.builder().id(comment.getId()).text(comment.getText()).profile(comment.getProfile())
+		return CommentDto.builder().id(comment.getId()).text(comment.getText()).profile(getProfileDto(comment.getProfile()))
 				.build();
 	}
 

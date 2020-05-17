@@ -157,6 +157,10 @@ public class ProfileServiceImp implements ProfileService {
 		List<ProfileDto> dtoList = new ArrayList<ProfileDto>();
 		List<Profile> prof = dao.searchByName(name);
 		List<FriendsProcess> pending = friendsDao.getPendingRequest(currentUserId);
+		List<FriendsProcess> friends = friendsDao.getFriends(currentUserId);
+		List<FriendsProcess> filterList = new ArrayList<>();
+		filterList.addAll(pending);
+		filterList.addAll(friends);
 		
 		for(Profile searchProfile : prof) {
 			String path = env.getProperty("doc.profile")+searchProfile.getUser().getId();
@@ -174,22 +178,35 @@ public class ProfileServiceImp implements ProfileService {
 				
 		}
 		
-//		for(int i =0 ; i<dtoList.size();i++) {
-//			for(int j =0 ; j<pending.size();j++) {
-//				if(dtoList.get(i).getUser_id()==pending.get(j).getUser_one_id()||dtoList.get(i).getUser_id()==pending.get(j).getUser_two_id()) {
-//					dtoList.remove(i);
-//				}
-//			}
-//		}
+		for(int i =0 ; i<filterList.size();i++) {
+			for(int j = 0 ; j<dtoList.size();j++) {
+				if(filterList.get(i).getUser_action()==currentUserId) {
+					if(filterList.get(i).getUser_one_id()==currentUserId) {
+						if(dtoList.get(j).getUser_id()==filterList.get(i).getUser_two_id()||dtoList.get(j).getUser_id()==filterList.get(i).getUser_action()) {
+							dtoList.remove(j);
+						}
+					}else if(filterList.get(i).getUser_two_id()==currentUserId) {
+						if(dtoList.get(j).getUser_id()==filterList.get(i).getUser_one_id()||dtoList.get(j).getUser_id()==filterList.get(i).getUser_action()) {
+							dtoList.remove(j);
+							break;
 
-		for(int i = 0 ; i<pending.size();i++) {
-			for(int j =0 ; j<dtoList.size() ; j++) {
-				if(pending.get(i).getUser_one_id()==dtoList.get(j).getUser_id()||pending.get(i).getUser_two_id()==dtoList.get(j).getUser_id()) {
-					dtoList.remove(j);
-					break;
+						}
+					}
+				}else {
+					if(filterList.get(i).getUser_one_id()==currentUserId||filterList.get(i).getUser_two_id()==currentUserId) {
+						if(dtoList.get(j).getUser_id()==filterList.get(i).getUser_action()||dtoList.get(j).getUser_id()==currentUserId||
+								dtoList.get(j).getUser_id()==currentUserId) {
+							dtoList.remove(j);
+							break;
+						}
+					}
 				}
 			}
+			
+			
 		}
+
+
 		
 			
 			return dtoList ;

@@ -11,10 +11,10 @@ import lombok.Setter;
 public class CommentDto {
 	private String text;
 	private long id;
-	private Profile profile;
+	private ProfileDto profile;
 	
 	@Builder
-	public CommentDto(String text, long id , Profile profile) {
+	public CommentDto(String text, long id , ProfileDto profile) {
 		this.text = text;
 		this.id = id;
 		this.profile = profile;
