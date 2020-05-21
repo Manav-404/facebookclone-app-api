@@ -23,7 +23,7 @@ public interface FriendsProcessDao extends JpaRepository<FriendsProcess, Long>{
 	@Query(value = "Select * from friends_process where user_one_id=?1 or user_two_id=?1 and user_action=?1 and status=0" , nativeQuery = true)
 	public List<FriendsProcess> getPendingRequest(long currentUserId);
 	
-	@Query(value = "Select * from friends_process where user_one_id=?1 or user_two_id=?1 and status=0 and user_action != ?1" ,nativeQuery = true)
+	@Query(value = "Select * from friends_process where (user_one_id=?1 or user_two_id=?1) and status=0 and user_action != ?1" ,nativeQuery = true)
 	public List<FriendsProcess> getToBeAcceptedList(long currentUserId);
 	
 	@Modifying

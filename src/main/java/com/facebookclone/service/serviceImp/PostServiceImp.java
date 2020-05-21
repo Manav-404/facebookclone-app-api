@@ -187,7 +187,7 @@ public class PostServiceImp implements PostService{
 		}
 		return PostDto.builder().id(entity.getId()).user_id(entity.getUser().getId())
 				.caption(entity.getCaption()).profile(profile)
-				.user_name(entity.getUser().getProfile().getFname()+""+entity.getUser().getProfile().getLname()).comments(comDto).path(path).build();
+				.user_name(entity.getUser().getProfile().getFname()+" "+entity.getUser().getProfile().getLname()).comments(comDto).path(path).build();
 	}
 
 
