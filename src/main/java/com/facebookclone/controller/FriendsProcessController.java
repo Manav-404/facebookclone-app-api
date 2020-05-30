@@ -48,7 +48,7 @@ public class FriendsProcessController {
 	@GetMapping("/reject/{friendId}")
 	public RestResponse rejectFriendRequest(@PathVariable("friendId")Long friendId, @RequestHeader("Authorization")String token) {
 		boolean rejected = service.rejectFriendRequest(friendId, token);
-		if(rejected) {
+		if(rejected==true) {
 			return RestResponse.builder().data(rejected).status(true).build();
 		}else {
 			return RestResponse.builder().status(false).build();

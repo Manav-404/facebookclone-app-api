@@ -31,7 +31,7 @@ public interface FriendsProcessDao extends JpaRepository<FriendsProcess, Long>{
 	public int acceptFriend(long friendId , long currentUserId);
 	
 	@Modifying
-	@Query(value = "Delete from friends_process where user_one_id=?1 or user_two_id=?1 and status =0 and user_action=?2" ,nativeQuery = true)
+	@Query(value = "Delete from friends_process where user_one_id=?1 or user_two_id=?1 and status =0 and user_one_id=?2 or user_two_id=?2" ,nativeQuery = true)
 	public int deleteFriendRequest(long friendId , long currentUserId);
 
 }

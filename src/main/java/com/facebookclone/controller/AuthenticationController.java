@@ -56,7 +56,7 @@ public class AuthenticationController {
 	}
 	
 	@PostMapping("/signup")
-	public RestResponse signup(@RequestBody User user) {
+	public RestResponse signup(@RequestBody User user) throws Exception {
 		UserDto dto = userService.createUser(user);
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(dto.getEmail());
 		final String jwt = tokenUtils.generateToken(userDetails); 
